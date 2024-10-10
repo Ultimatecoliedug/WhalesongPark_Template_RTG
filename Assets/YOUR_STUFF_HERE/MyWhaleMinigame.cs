@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using TMPro;
 using UnityEngine;
 
 public enum GameStateEnum
@@ -8,11 +9,27 @@ public enum GameStateEnum
     NOT_PLAYING,
     IN_LOBBY,
     PLAYING,
+    FINISHING,
 };
 
 public class MyWhaleMinigame : MinigameBase
 {
     public GameStateEnum _GameState;
+
+    [SerializeField]
+    GameObject[] MainMenuScreens;
+
+    [SerializeField]
+    GameObject[] LobbyScreens;
+
+    [SerializeField]
+    GameObject[] QueueScreens;
+
+    [SerializeField]
+    GameObject[] GameScreens;
+
+    [SerializeField]
+    GameObject[] FinishedScreens;
 
     [SerializeField]
     PlayerManager PlayerManagerRef;
@@ -102,6 +119,27 @@ public class MyWhaleMinigame : MinigameBase
         }
     }
 
+    public override void Update()
+    {
+        base.Update();
+
+        if (GameFinishedTimer > 0.0f)
+        {
+            GameFinishedTimer -= Time.deltaTime;
+
+            if (GameFinishedTimer <= 0.0f)
+            {
+                _GameState = GameStateEnum.NOT_PLAYING;
+
+                for (int i = 0; i < 4; i++)
+                {
+                    MainMenuScreens[i].SetActive(true);
+                    FinishedScreens[i].SetActive(false);
+                }
+            }
+        }
+    }
+
     public override void LoadMiniGame()
     {
         base.LoadMiniGame();
@@ -126,6 +164,8 @@ public class MyWhaleMinigame : MinigameBase
         GameManagerRef.AlwaysPassInputToGame = false;
     }
 
+    static int PlayersInLobby = 0;
+
     private void ActivatePlayer(int playerIndex)
     {
         Debug.Log("MINE: Game State Was: " + _GameState);
@@ -139,10 +179,15 @@ public class MyWhaleMinigame : MinigameBase
         {
             _GameState = GameStateEnum.PLAYING;
 
+            PlayersInLobby = 0;
+            PlayersFinished = 0;
+
             for (int i = 0; i < players.Length;  i++)
             {
                 if (players[i]._MyPlayerState == PlayerStateEnum.IN_LOBBY)
                 {
+                    LobbyScreens[i].SetActive(false);
+                    GameScreens[i].transform.GetChild(0).gameObject.SetActive(true);
                     players[i].FinalActivatePlayer(ZonesEnum.Britian);
                 }
             }
@@ -154,16 +199,54 @@ public class MyWhaleMinigame : MinigameBase
         {
             players[playerIndex]._MyPlayerState = PlayerStateEnum.IN_LOBBY;
             Debug.Log("MINE: Player: " + playerIndex + " is now waiting in the lobby!!");
+
+            MainMenuScreens[playerIndex].SetActive(false);
+            LobbyScreens[playerIndex].SetActive(true);
+
+            PlayersInLobby++;
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (players[playerIndex]._MyPlayerState == PlayerStateEnum.IN_LOBBY)
+                {
+                    LobbyScreens[playerIndex].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = PlayersInLobby.ToString() + " Players in lobby!";
+                }
+            }
         }
         else if (players[playerIndex]._MyPlayerState == PlayerStateEnum.NOT_PLAYING)
         {
+            if (PlayersFinished > 0)
+            {
+                return;
+            }
+
             players[playerIndex]._MyPlayerState = PlayerStateEnum.QUEUED;
             QueuedPlayers.Add(players[playerIndex]);
+
+            MainMenuScreens[playerIndex].SetActive(false);
+            QueueScreens[playerIndex].SetActive(true);
 
             Debug.Log("MINE: Player: " + playerIndex + " is now queued to join at the next zone!!");
         }
     }
 
+    float GameFinishedTimer = 0.0f;
+    const float EndScreenTime = 2.5f;
+
+    void GameFinished()
+    {
+        GameFinishedTimer = 2.5f;
+    }
+
+    static int PlayersFinished = 0;
+
+    string[] PlaceStrings = new string[]
+    {
+        "1st",
+        "2nd",
+        "3rd",
+        "4th"
+    };
 
     private void ReachedNewZone(PlayerRig PlayerWhoReached)
     {
@@ -193,14 +276,19 @@ public class MyWhaleMinigame : MinigameBase
             HighestZone = (int)ZonesEnum.Antartic;
             PlayerWhoReached.DeActivatePlayer();
 
-            //ADD switching to the "Player is Finished" GUI here!!!
+            FinishedScreens[PlayerWhoReached.PlayerIndex].gameObject.SetActive(true);
+            GameScreens[PlayerWhoReached.PlayerIndex].transform.GetChild(0).gameObject.SetActive(false);
+
+            FinishedScreens[PlayerWhoReached.PlayerIndex].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "You came " + PlaceStrings[PlayersFinished];
+
+            PlayersFinished++;
         }
 
         bool AllPlayersFinished = true;
         
         for (int i = 0; i < players.Length; i++)
         {
-            if (players[i].Zone != ZonesEnum.Finished)
+            if (players[i].Zone != ZonesEnum.Finished && players[i]._MyPlayerState == PlayerStateEnum.PLAYING)
             {
                 AllPlayersFinished = false;
                 break;
@@ -209,7 +297,9 @@ public class MyWhaleMinigame : MinigameBase
 
         if (AllPlayersFinished)
         {
-            _GameState = GameStateEnum.NOT_PLAYING;
+            _GameState = GameStateEnum.FINISHING;
+
+            GameFinished();
 
             return;
         }

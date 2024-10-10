@@ -1,0 +1,552 @@
+fileFormatVersion: 2
+guid: ab9b4a4264cf2e746a85a028c1e7ead3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1066717950597315399
+    second: SailsTutorialIcon_0
+  - first:
+      213: 213496277562951759
+    second: SailsTutorialIcon_1
+  - first:
+      213: -5846432753458001832
+    second: SailsTutorialIcon_2
+  - first:
+      213: 4258934218222689039
+    second: SailsTutorialIcon_3
+  - first:
+      213: 2262340572995093452
+    second: SailsTutorialIcon_4
+  - first:
+      213: -5045951250509665453
+    second: SailsTutorialIcon_5
+  - first:
+      213: -1565615815505188415
+    second: SailsTutorialIcon_6
+  - first:
+      213: -8847313166032885018
+    second: SailsTutorialIcon_7
+  - first:
+      213: -8994433346636784524
+    second: SailsTutorialIcon_8
+  - first:
+      213: -8246215931125522469
+    second: SailsTutorialIcon_9
+  - first:
+      213: -7199499168401901422
+    second: SailsTutorialIcon_10
+  - first:
+      213: -8451401105878640626
+    second: SailsTutorialIcon_11
+  - first:
+      213: 6359995369948882720
+    second: SailsTutorialIcon_12
+  - first:
+      213: -84535864985291830
+    second: SailsTutorialIcon_13
+  - first:
+      213: 1360474892322755631
+    second: SailsTutorialIcon_14
+  - first:
+      213: 1513088227394033166
+    second: SailsTutorialIcon_15
+  - first:
+      213: -8788567658857410852
+    second: SailsTutorialIcon_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SailsTutorialIcon_0
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 615
+        width: 215
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b44d17fca14231f0800000000000000
+      internalID: -1066717950597315399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_1
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 901
+        width: 110
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f480209bbbd76f200800000000000000
+      internalID: 213496277562951759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_2
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 572
+        width: 356
+        height: 433
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8584deee26c4ddea0800000000000000
+      internalID: -5846432753458001832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_3
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 799
+        width: 202
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0b5bee4b16ca1b30800000000000000
+      internalID: 4258934218222689039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_4
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 789
+        width: 109
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc38356c3c2756f10800000000000000
+      internalID: 2262340572995093452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_5
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 746
+        width: 110
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35bee6f721e29f9b0800000000000000
+      internalID: -5045951250509665453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_6
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 693
+        width: 202
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c96416f5b0d54ae0800000000000000
+      internalID: -1565615815505188415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_7
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 97
+        width: 356
+        height: 425
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ea29f1fc87083580800000000000000
+      internalID: -8847313166032885018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_8
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 254
+        width: 215
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47c59c9968a5d2380800000000000000
+      internalID: -8994433346636784524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_9
+      rect:
+        serializedVersion: 2
+        x: 746
+        y: 458
+        width: 55
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdf981c0d4e8f8d80800000000000000
+      internalID: -8246215931125522469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_10
+      rect:
+        serializedVersion: 2
+        x: 855
+        y: 254
+        width: 216
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2983fa2a6ad361c90800000000000000
+      internalID: -7199499168401901422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_11
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 458
+        width: 55
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0892cdb87796ba80800000000000000
+      internalID: -8451401105878640626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_12
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 432
+        width: 110
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 027aeee971e334850800000000000000
+      internalID: 6359995369948882720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_13
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 414
+        width: 202
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac375c4241ba3def0800000000000000
+      internalID: -84535864985291830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_14
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 321
+        width: 109
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f245cbad4b061e210800000000000000
+      internalID: 1360474892322755631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_15
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 308
+        width: 202
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0695a3e9b19ff410800000000000000
+      internalID: 1513088227394033166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SailsTutorialIcon_16
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 277
+        width: 110
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cde4151374cb80680800000000000000
+      internalID: -8788567658857410852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      SailsTutorialIcon_0: -1066717950597315399
+      SailsTutorialIcon_1: 213496277562951759
+      SailsTutorialIcon_10: -7199499168401901422
+      SailsTutorialIcon_11: -8451401105878640626
+      SailsTutorialIcon_12: 6359995369948882720
+      SailsTutorialIcon_13: -84535864985291830
+      SailsTutorialIcon_14: 1360474892322755631
+      SailsTutorialIcon_15: 1513088227394033166
+      SailsTutorialIcon_16: -8788567658857410852
+      SailsTutorialIcon_2: -5846432753458001832
+      SailsTutorialIcon_3: 4258934218222689039
+      SailsTutorialIcon_4: 2262340572995093452
+      SailsTutorialIcon_5: -5045951250509665453
+      SailsTutorialIcon_6: -1565615815505188415
+      SailsTutorialIcon_7: -8847313166032885018
+      SailsTutorialIcon_8: -8994433346636784524
+      SailsTutorialIcon_9: -8246215931125522469
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
