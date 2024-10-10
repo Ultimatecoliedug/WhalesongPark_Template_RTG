@@ -6,7 +6,7 @@ public class Obstacle : MonoBehaviour
 {
     Rigidbody rb;
     PlayerRig rig;
-    [SerializeField] private float SpeedReductionOnHit = 5;
+    [SerializeField] private float SpeedReductionMultiplierOnHit = 0.75f;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +39,7 @@ public class Obstacle : MonoBehaviour
         // Collision, player velocity reduced, score malice etc...
         if (collision.gameObject.tag == "Player")
         {
-            rig.playerSpeed -= SpeedReductionOnHit;
+            rig.playerSpeed *= SpeedReductionMultiplierOnHit;
             Destroy(gameObject);
         }
     }

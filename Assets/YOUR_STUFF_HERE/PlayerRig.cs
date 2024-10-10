@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,15 +41,13 @@ public class PlayerRig : MonoBehaviour
 
     public ZonesEnum Zone;
 
-    public int Score;
-
     [SerializeField]
     public int PlayerIndex;
 
     TutorialsEnum TutorialsDoneFlag;
     TutorialsEnum CurrentTutorial;
 
-    bool EventTimerActive;
+    bool EventTimerActive = false;
 
     float EventTimer;
 
@@ -60,6 +59,7 @@ public class PlayerRig : MonoBehaviour
         3.5f,
         3.5f,
         3.5f,
+        3.5f,
     };
 
     Action[] TimedEvents;
@@ -67,18 +67,19 @@ public class PlayerRig : MonoBehaviour
     void RaiseSailsTut() { StartTutorial(TutorialsEnum.RaiseSails); }
     void LowerSailsTut() { StartTutorial(TutorialsEnum.LowerSails); }
     void LeftRightTut() { StartTutorial(TutorialsEnum.Left_Right); }
-    void StartObstacleSpawn() { StartTutorial(TutorialsEnum.Left_Right); }
-    void StartDolphinSpawn() {  }
+    void StartObstacleSpawn() { ResetObstacleSpawning(); }
+    void StartDolphinSpawn() { StartTutorial(TutorialsEnum.Dolphin); }
+    void EndDolphinSpawn() { FinishedTutorial(TutorialsEnum.Dolphin); }
 
     [SerializeField]
     Image[] TutorialImages;
 
     static Dictionary<TutorialsEnum, int> FlagToIndex = new Dictionary<TutorialsEnum, int>()
     {
-        { TutorialsEnum.RaiseSails, 1},
-        { TutorialsEnum.LowerSails, 2},
-        { TutorialsEnum.Left_Right, 3},
-        { TutorialsEnum.Dolphin, 4},
+        { TutorialsEnum.RaiseSails, 0},
+        { TutorialsEnum.LowerSails, 1},
+        { TutorialsEnum.Left_Right, 2},
+        { TutorialsEnum.Dolphin, 3},
     };
 
     // PLAYER
@@ -101,12 +102,38 @@ public class PlayerRig : MonoBehaviour
     [SerializeField] private GameObject prefabLand;
     float timeSinceLastSpawn = 0f;
     float timeSinceLastLand = 0f;
-    [SerializeField] private float spawnRate;
+
+    [SerializeField]
+    float SpawnRateConst;
+
+    private float spawnRate = 0;
     public LayerMask mask;
     // SCORE
     public float playerScore = 0;
+
+    [SerializeField]
+    TextMeshProUGUI ScoreText;
+
+    [SerializeField]
+    ProgressBarScript ProgressBarRef;
+
+    [SerializeField]
+    Dial_Ui_Setter SpeedDialRef;
+
+    [SerializeField]
+    float MaxSpeed = 5;
+
+    [SerializeField]
+    float MinSpeed = 7;
+
     void Start()
     {
+        if (SpeedDialRef != null)
+        {
+            SpeedDialRef.MinSpeed = MinSpeed;
+            SpeedDialRef.MaxSpeed = MaxSpeed;
+        }
+
         obstacles = transform.Find("Obstacles").gameObject;
 
         TimedEvents = new Action[]
@@ -132,13 +159,14 @@ public class PlayerRig : MonoBehaviour
             }
         }
 
-        playerSpeed += playerAcceleration * Time.deltaTime;
-        playerSpeed = Mathf.Clamp(playerSpeed, 5, Mathf.Infinity);
         ProcessObjectSpawning();
     }
     private void FixedUpdate()
     {
-        UpdateScore(Time.fixedDeltaTime * playerSpeed);
+        if (_MyPlayerState == PlayerStateEnum.PLAYING)
+        {
+            AdjustSpeed(Time.fixedDeltaTime * playerAcceleration);
+        }
     }
 
     public void HandleInput(inputTypes type, Vector2 direction = new Vector2())
@@ -163,6 +191,12 @@ public class PlayerRig : MonoBehaviour
 
     }
 
+    void ResetObstacleSpawning()
+    {
+        timeSinceLastSpawn = 999.0f;
+        spawnRate = SpawnRateConst;
+    }
+
     private void ProcessMovement(Vector3 direction)
     {
         obstacles.transform.localPosition = obstacles.transform.localPosition + direction * Time.deltaTime * playerSlideSpeed * playerSpeed;
@@ -170,7 +204,16 @@ public class PlayerRig : MonoBehaviour
 
     private void ProcessObjectSpawning()
     {
-        if (timeSinceLastSpawn >= 1/spawnRate / playerSpeed)
+        if (spawnRate == 0.0f)
+        {
+            return;
+        }
+
+        Debug.Log("SPAWN_STUFF: timeSinceLastSpawn: " + timeSinceLastSpawn);
+        Debug.Log("SPAWN_STUFF: spawnRate: " + spawnRate);
+        Debug.Log("SPAWN_STUFF: playerSpeed: " + playerSpeed);
+
+        if (timeSinceLastSpawn >= 1.0f / spawnRate / playerSpeed)
         {
             //generate random offset
             int offset = UnityEngine.Random.Range(-15, 15);
@@ -178,11 +221,7 @@ public class PlayerRig : MonoBehaviour
             //get base position
             Vector3 spawnPos = transform.TransformPoint(new Vector3(offset, 0, ObstacleSpawnDistance));
 
-            if (timeSinceLastLand >= 20/spawnRate / playerSpeed)
-            {
-                //SpawnLand(spawnPos);
-            }
-            else SpawnSingleObject(spawnPos);
+            SpawnSingleObject(spawnPos);
 
             timeSinceLastSpawn = 0;
         }
@@ -191,6 +230,8 @@ public class PlayerRig : MonoBehaviour
     }
     private void SpawnSingleObject(Vector3 spawnPos)
     {
+        Debug.Log("Spawned an object!!!");
+
         Collider[] overlaps = Physics.OverlapSphere(spawnPos, 0.1f, mask, QueryTriggerInteraction.UseGlobal);
         foreach (Collider collision in overlaps)
         {
@@ -217,13 +258,15 @@ public class PlayerRig : MonoBehaviour
         EventTimerActive = false;
         gameObject.SetActive(false);
         _MyPlayerState = PlayerStateEnum.NOT_PLAYING;
+        playerSpeed = 0;
+        spawnRate = 0;
     }
 
     public void FinishedTutorial(TutorialsEnum TutorialFinished)
     {
         if (!TutorialsDoneFlag.HasFlag(TutorialFinished))
         {
-            TutorialImages[FlagToIndex[TutorialFinished]].gameObject.SetActive(true);
+            TutorialImages[FlagToIndex[TutorialFinished]].gameObject.SetActive(false);
         }
 
         TutorialsDoneFlag = TutorialsDoneFlag | TutorialFinished;
@@ -245,9 +288,10 @@ public class PlayerRig : MonoBehaviour
         _MyPlayerState = PlayerStateEnum.PLAYING;
         CurrentTutorial = TutorialsEnum.None;
         TutorialsDoneFlag = TutorialsEnum.None;
-        Score = 0;
+        playerScore = 0;
         EventTimerActive = true;
         TimedEventIndex = -1;
+        playerSpeed = MinSpeed;
 
         TimedEventTimeOut();
     }
@@ -261,15 +305,29 @@ public class PlayerRig : MonoBehaviour
     public void UpdateScore(float scoreAmount)
     {
         playerScore += scoreAmount;
+
+        if (ScoreText != null)
+        {
+            ScoreText.text = "Score: " + Mathf.RoundToInt(playerScore).ToString();
+        }
+
         //Debug.Log("Current Score: " + playerScore);
     }
 
     public void AdjustSpeed(float adjustAmount)
     {
+        Debug.Log("Adjusting Speed!");
+
         playerSpeed += adjustAmount;
-        if (adjustAmount < 0)
+        playerSpeed = Mathf.Clamp(playerSpeed, MinSpeed, MaxSpeed);
+
+        UpdateScore(playerSpeed * 2 * Time.fixedDeltaTime);
+
+        Debug.Log("Speed Dial Null state: " + (SpeedDialRef == null).ToString());
+
+        if (SpeedDialRef != null)
         {
-            UpdateScore(adjustAmount * 2);
+            SpeedDialRef.SetSpeed(playerSpeed);
         }
     }
     public void TimedEventTimeOut()

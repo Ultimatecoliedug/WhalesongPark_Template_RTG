@@ -12,13 +12,7 @@ public class ProgressBarScript : MonoBehaviour
 
     private void Update()
     {
-        if (TravelPoints != null)
-        {
-            SetShipPositionPercent(TestPercent, 0);
-            SetShipPositionPercent(TestPercent * 0.75f, 3);
-            SetShipPositionPercent(TestPercent * 0.5f, 2);
-            SetShipPositionPercent(TestPercent * 0.25f, 1);
-        }
+
     }
 
     // Start is called before the first frame update
