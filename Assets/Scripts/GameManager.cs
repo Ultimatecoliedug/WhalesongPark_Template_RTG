@@ -229,6 +229,7 @@ public class GameManager : MonoBehaviour
                     });
                     break;
                 case GameState.MINIGAME:
+
                     for (int i = 0; i < 4; i++)
                     {
                         if (playerManager.GetPlayerState(i) == Player.PlayerState.ACTIVE && !m_AnyPlayerInput[i])

@@ -60,6 +60,7 @@ public class PlayerRig : MonoBehaviour
         3.5f,
         3.5f,
         3.5f,
+        3.5f,
     };
 
     Action[] TimedEvents;
@@ -143,6 +144,7 @@ public class PlayerRig : MonoBehaviour
             LeftRightTut,
             StartObstacleSpawn,
             StartDolphinSpawn,
+            EndDolphinSpawn,
         };
     }
 
@@ -199,7 +201,7 @@ public class PlayerRig : MonoBehaviour
 
     private void ProcessMovement(Vector3 direction)
     {
-        obstacles.transform.localPosition = obstacles.transform.localPosition + direction * Time.deltaTime * playerSlideSpeed * playerSpeed;
+        obstacles.transform.localPosition = obstacles.transform.localPosition + direction * Time.deltaTime * playerSlideSpeed * (playerSpeed * 0.25f);
     }
 
     private void ProcessObjectSpawning()
@@ -208,10 +210,6 @@ public class PlayerRig : MonoBehaviour
         {
             return;
         }
-
-        Debug.Log("SPAWN_STUFF: timeSinceLastSpawn: " + timeSinceLastSpawn);
-        Debug.Log("SPAWN_STUFF: spawnRate: " + spawnRate);
-        Debug.Log("SPAWN_STUFF: playerSpeed: " + playerSpeed);
 
         if (timeSinceLastSpawn >= 1.0f / spawnRate / playerSpeed)
         {
@@ -321,7 +319,7 @@ public class PlayerRig : MonoBehaviour
         playerSpeed += adjustAmount;
         playerSpeed = Mathf.Clamp(playerSpeed, MinSpeed, MaxSpeed);
 
-        UpdateScore(playerSpeed * 2 * Time.fixedDeltaTime);
+        UpdateScore((Mathf.Pow(playerSpeed,2.0f)) * Time.fixedDeltaTime * 0.1f);
 
         Debug.Log("Speed Dial Null state: " + (SpeedDialRef == null).ToString());
 
