@@ -719,7 +719,32 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      possibleLogo_0: 1837802126601155974
+      possibleLogo_1: -812581914061494776
+      possibleLogo_10: -491319441780372215
+      possibleLogo_11: -4150363945949759919
+      possibleLogo_12: -4727249731293714023
+      possibleLogo_13: -3008381416994785966
+      possibleLogo_14: -2245277328356513920
+      possibleLogo_15: -1683453046031185318
+      possibleLogo_16: 6648886523400775815
+      possibleLogo_17: -4223024724571456113
+      possibleLogo_18: 1075640005096154890
+      possibleLogo_19: -5553592087239816288
+      possibleLogo_2: 1873503683296096158
+      possibleLogo_20: 4489346873040406032
+      possibleLogo_21: -8755189351529944417
+      possibleLogo_22: 8164784832731618271
+      possibleLogo_23: -412034756412672080
+      possibleLogo_24: 4934872721951563460
+      possibleLogo_3: 2151927171288905724
+      possibleLogo_4: 3258488345647714815
+      possibleLogo_5: -7767223106958156769
+      possibleLogo_6: -2111336087785446526
+      possibleLogo_7: 4726523410183565487
+      possibleLogo_8: 4761487404284362099
+      possibleLogo_9: 4740218159096401493
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
