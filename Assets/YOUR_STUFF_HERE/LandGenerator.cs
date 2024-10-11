@@ -17,7 +17,7 @@ public class LandGenerator : MonoBehaviour
     private float positionsDistance = 0;
 
     [SerializeField] private float rotateRange = 45;
-    bool isGeneratingLand = true;
+    [SerializeField] bool isGeneratingLand = true;
     [SerializeField] LayerMask layerMask1;
     //DEBUG
     Vector3 sphereLocation;
@@ -72,7 +72,7 @@ public class LandGenerator : MonoBehaviour
         sphereLocation = nextStaticPosition;
         foreach (Collider collision in collisions)
         {
-            if (collision.tag == "Land" && collision.transform.parent != gameObject.transform) return false;
+            if (collision.tag == "LandRight" && collision.transform.parent != gameObject.transform) return false;
         }
         return true;
     }
@@ -86,7 +86,7 @@ public class LandGenerator : MonoBehaviour
         if (!CheckGenerationValidity(dynamicPosition, randomOffset))
         {
             Debug.Log("Land gen failed");
-            return;
+            //return;
         }
         isGeneratingLand = false;
         Instantiate(landPrefab, dynamicPosition, rotation, transform.parent);
@@ -103,7 +103,7 @@ public class LandGenerator : MonoBehaviour
     private void CheckForDestroy()
     {
         //Check to see if passed the player's Z point, if so destroy object.
-        if (transform.localPosition.z <= -5)
+        if (transform.localPosition.z <= -40)
         {
             Destroy(gameObject);
         }

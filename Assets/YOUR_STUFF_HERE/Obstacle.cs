@@ -39,7 +39,7 @@ public class Obstacle : MonoBehaviour
         // Collision, player velocity reduced, score malice etc...
         if (collision.gameObject.tag == "Player")
         {
-            rig.playerSpeed *= SpeedReductionMultiplierOnHit;
+            rig.AdjustSpeed(SpeedReductionMultiplierOnHit, true);
             Destroy(gameObject);
         }
     }

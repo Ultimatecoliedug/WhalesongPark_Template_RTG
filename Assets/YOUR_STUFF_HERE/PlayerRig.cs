@@ -98,16 +98,18 @@ public class PlayerRig : MonoBehaviour
     [SerializeField] private int ObstacleSpawnDistance = 30;
     [SerializeField] private int landDistanceOffset = 25;
     GameObject obstacles;
-    [SerializeField] private GameObject prefab1x1;
+    bool coldWater;
+    [SerializeField] private GameObject[] warmWaterObstaclePrefabs;
+    [SerializeField] private GameObject[] coldWaterObstaclePrefabs;
     [SerializeField] private GameObject prefabLand;
     float timeSinceLastSpawn = 0f;
-    float timeSinceLastLand = 0f;
 
     [SerializeField]
     float SpawnRateConst;
 
     private float spawnRate = 0;
     public LayerMask mask;
+    
     // SCORE
     public float playerScore = 0;
 
@@ -126,6 +128,16 @@ public class PlayerRig : MonoBehaviour
     [SerializeField]
     float MinSpeed = 7;
 
+    [SerializeField] GameObject sailsFull;
+    [SerializeField] GameObject sailsHalf;
+    float sailsAccelerationMultiplier = 1;
+    int sailsValue = 1;
+
+    float distanceTravelled = 0;
+    int currentZone = 1;
+    [SerializeField] float Zone1Length = 500;
+
+    public MyWhaleMinigame minigameScript;
     void Start()
     {
         if (SpeedDialRef != null)
@@ -166,6 +178,9 @@ public class PlayerRig : MonoBehaviour
         if (_MyPlayerState == PlayerStateEnum.PLAYING)
         {
             AdjustSpeed(Time.fixedDeltaTime * playerAcceleration);
+            UpdateScore(Time.fixedDeltaTime * playerSpeed);
+            ProcessTravelling();
+            Debug.Log("Distance: " + distanceTravelled);
         }
     }
 
@@ -179,10 +194,10 @@ public class PlayerRig : MonoBehaviour
         switch (type)
         {
             case inputTypes.primaryFire:
-                ProcessMovement(new Vector3(1, 0, 0));
+                ChangeSailPosition(-1);
                 break;
             case inputTypes.secondaryFire:
-                ProcessMovement(new Vector3(-1, 0, 0));
+                ChangeSailPosition(1);
                 break;
             case inputTypes.Directional:
                 ProcessMovement(new Vector3(-direction.x, 0, 0));
@@ -201,6 +216,33 @@ public class PlayerRig : MonoBehaviour
     {
         obstacles.transform.localPosition = obstacles.transform.localPosition + direction * Time.deltaTime * playerSlideSpeed * playerSpeed;
     }
+    private void ChangeSailPosition(int value)
+    {
+        if (sailsValue + value < 0) return;
+        else if (sailsValue + value > 2) return;
+        sailsValue += value;
+        switch (sailsValue)
+        {
+            case 0:
+                Debug.Log("Sails Bad");
+                sailsFull.SetActive(false);
+                sailsHalf.SetActive(false);
+                sailsAccelerationMultiplier = 0.5f;
+                break;
+            case 1:
+                Debug.Log("Sails meh");
+                sailsFull.SetActive(false);
+                sailsHalf.SetActive(true);
+                sailsAccelerationMultiplier = 0.75f;
+                break;
+            case 2:
+                Debug.Log("Sails pog");
+                sailsFull.SetActive(true);
+                sailsHalf.SetActive(false);
+                sailsAccelerationMultiplier = 1;
+                break;
+        }
+    }
 
     private void ProcessObjectSpawning()
     {
@@ -209,9 +251,9 @@ public class PlayerRig : MonoBehaviour
             return;
         }
 
-        Debug.Log("SPAWN_STUFF: timeSinceLastSpawn: " + timeSinceLastSpawn);
-        Debug.Log("SPAWN_STUFF: spawnRate: " + spawnRate);
-        Debug.Log("SPAWN_STUFF: playerSpeed: " + playerSpeed);
+        //Debug.Log("SPAWN_STUFF: timeSinceLastSpawn: " + timeSinceLastSpawn);
+        //Debug.Log("SPAWN_STUFF: spawnRate: " + spawnRate);
+        //Debug.Log("SPAWN_STUFF: playerSpeed: " + playerSpeed);
 
         if (timeSinceLastSpawn >= 1.0f / spawnRate / playerSpeed)
         {
@@ -226,22 +268,34 @@ public class PlayerRig : MonoBehaviour
             timeSinceLastSpawn = 0;
         }
         timeSinceLastSpawn += Time.deltaTime;
-        timeSinceLastLand += Time.deltaTime;
     }
     private void SpawnSingleObject(Vector3 spawnPos)
     {
-        Debug.Log("Spawned an object!!!");
-
+        //Debug.Log("Spawned an object!!!");
+        int random;
         Collider[] overlaps = Physics.OverlapSphere(spawnPos, 0.1f, mask, QueryTriggerInteraction.UseGlobal);
         foreach (Collider collision in overlaps)
         {
             if (collision.gameObject != null) return;
         }
-        Instantiate(prefab1x1, spawnPos, transform.rotation, obstacles.transform);
+        if (coldWater)
+        {
+            random = UnityEngine.Random.Range(0, coldWaterObstaclePrefabs.Length);
+            random = random + UnityEngine.Random.Range(0, 1);
+            if (random > coldWaterObstaclePrefabs.Length) random -= 1;
+            Instantiate(coldWaterObstaclePrefabs[random], spawnPos, transform.rotation, obstacles.transform);
+        }
+        else
+        {
+            random = UnityEngine.Random.Range(0, warmWaterObstaclePrefabs.Length);
+            random = random + UnityEngine.Random.Range(0, 1);
+            if (random > warmWaterObstaclePrefabs.Length) random -= 1;
+            Instantiate(warmWaterObstaclePrefabs[random], spawnPos, transform.rotation, obstacles.transform);
+        }
     }
+    /*
     private void SpawnLand(Vector3 spawnPos)
     {
-        timeSinceLastLand = 0;
         //Convert to local space and apply landmass offset
         Vector3 leftPos = obstacles.transform.InverseTransformPoint(spawnPos) - new Vector3(-27.5f, 0, -landDistanceOffset);
         Vector3 rightPos = obstacles.transform.InverseTransformPoint(spawnPos) - new Vector3(27.5f, 0, -landDistanceOffset);
@@ -252,6 +306,7 @@ public class PlayerRig : MonoBehaviour
         Instantiate(prefabLand, leftPos, transform.rotation, obstacles.transform);
         Instantiate(prefabLand, rightPos, transform.rotation, obstacles.transform);
     }
+    */
 
     public void ResetPlayer()
     {
@@ -314,16 +369,23 @@ public class PlayerRig : MonoBehaviour
         //Debug.Log("Current Score: " + playerScore);
     }
 
-    public void AdjustSpeed(float adjustAmount)
+    public void AdjustSpeed(float adjustAmount, bool multiplier = false)
     {
-        Debug.Log("Adjusting Speed!");
+        if (multiplier)
+        {
+            float oldPlayerSpeed = playerSpeed;
+            playerSpeed *= adjustAmount;
+            float difference = playerSpeed - oldPlayerSpeed;
+            UpdateScore(difference * 10);
+        }
+        else
+        {
+            if (playerSpeed >= MaxSpeed) return;
+            playerSpeed += adjustAmount;
+            if (playerSpeed > MaxSpeed * sailsAccelerationMultiplier) playerSpeed -= Time.fixedDeltaTime * 3;
+        }
 
-        playerSpeed += adjustAmount;
-        playerSpeed = Mathf.Clamp(playerSpeed, MinSpeed, MaxSpeed);
-
-        UpdateScore(playerSpeed * 2 * Time.fixedDeltaTime);
-
-        Debug.Log("Speed Dial Null state: " + (SpeedDialRef == null).ToString());
+        playerSpeed = Mathf.Clamp(playerSpeed, MinSpeed, float.PositiveInfinity);
 
         if (SpeedDialRef != null)
         {
@@ -343,5 +405,22 @@ public class PlayerRig : MonoBehaviour
         {
             EventTimerActive = false;
         }
-    }    
+    }  
+    
+    void ProcessTravelling()
+    {
+        distanceTravelled = Time.fixedDeltaTime * playerSpeed;
+        switch (currentZone)
+        {
+            case 1:
+                if (distanceTravelled >= Zone1Length) minigameScript.ReachedNewZone(this);
+                distanceTravelled = 0;
+                coldWater = true;
+                break;
+            case 2:
+                if (distanceTravelled >= Zone1Length) minigameScript.ReachedNewZone(this);
+                distanceTravelled = 0;
+                break;
+        }
+    }
 }

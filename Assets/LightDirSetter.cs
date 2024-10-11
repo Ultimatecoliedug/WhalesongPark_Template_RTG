@@ -8,7 +8,7 @@ public class LightDirSetter : MonoBehaviour
     {
         Vector3 ForwardVec = transform.forward;
 
-        Debug.Log("Setting Shader Val to: " + ForwardVec);
+        //Debug.Log("Setting Shader Val to: " + ForwardVec);
 
         Shader.SetGlobalVector("_LightDir", new Vector4(ForwardVec.x, ForwardVec.y, ForwardVec.z,1.0f));
     }

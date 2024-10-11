@@ -131,6 +131,8 @@ public class MyWhaleMinigame : MinigameBase
         Debug.Log("MINE: Game State Was: " + _GameState);
         Debug.Log("MINE: Player " + playerIndex + " Was in state: " + players[playerIndex]._MyPlayerState);
 
+        players[playerIndex].minigameScript = this;
+
         if (_GameState == GameStateEnum.NOT_PLAYING)
         {
             _GameState = GameStateEnum.IN_LOBBY;
@@ -165,7 +167,7 @@ public class MyWhaleMinigame : MinigameBase
     }
 
 
-    private void ReachedNewZone(PlayerRig PlayerWhoReached)
+    public void ReachedNewZone(PlayerRig PlayerWhoReached)
     {
         PlayerWhoReached.Zone = (ZonesEnum)(((int)PlayerWhoReached.Zone) + 1);
 

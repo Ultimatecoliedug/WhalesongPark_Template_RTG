@@ -16,7 +16,7 @@ public class Dial_Ui_Setter : MonoBehaviour
 
     public void SetSpeed(float NewSpeed)
     {
-        Debug.Log("Speed Dial Speed: " + NewSpeed);
+        //Debug.Log("Speed Dial Speed: " + NewSpeed);
 
         float NewZAngle = -180.0f * ((NewSpeed - MinSpeed) / SpeedDif);
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, NewZAngle));
